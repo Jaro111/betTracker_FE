@@ -64,3 +64,23 @@ export const authCheck = async (jwt) => {
     console.log(error);
   }
 };
+
+// Fetch sports
+export const getSports = async (jwt) => {
+  try {
+    const response = await fetch("http://localhost:5000/sport/getSports", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      //
+    });
+    const data = await response.json();
+    return data;
+    //
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,3 +1,6 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navbar } from "./components/Navbar/Navbar";
+import { Home } from "./pages/Home";
 import { useState, useEffect } from "react";
 import { LogIn } from "./components/LogSign/LogIn/LogIn";
 import { getTokenFromCookie } from "./common/index";
@@ -20,6 +23,7 @@ function App() {
 
   const logInWithToken = async (token, setUser) => {
     const persistantUser = await authCheck(token);
+    persistantUser.user["token"] = token;
     console.log("persistantUser: ", persistantUser);
     await setUser(persistantUser.user);
   };
@@ -38,7 +42,12 @@ function App() {
           <LogIn setUser={setUser} />
         </div>
       ) : (
-        <p>Dupa</p>
+        <BrowserRouter basename="">
+          <Navbar setUser={setUser} user={user} />
+          <Routes>
+            <Route path="" element={<Home user={user} />} />
+          </Routes>
+        </BrowserRouter>
       )}
     </>
   );

@@ -1,0 +1,21 @@
+/* .SportSelect-select {
+  padding: 5px;
+} */
+.SportSelect {
+  display: flex;
+  margin-left: 5px;
+}
+
+.SportSelect-form {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 5px;
+}
+
+.SportSelect-label {
+  margin-right: 5px;
+}
+
+.SportSelect-select {
+  margin-right: 5px;
+}

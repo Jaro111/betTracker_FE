@@ -13,11 +13,6 @@ export const LogIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!username || username === "undefined") {
-    //   return;
-    // } else if (!password || username === "undefined") {
-    //   return;
-    // }
     const data = await login(username, password);
     await setUser(data.user);
   };
