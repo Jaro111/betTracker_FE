@@ -3,7 +3,7 @@ import { writeCookie } from "../common/index";
 
 // SIGN UP
 export const signupuUser = async (username, email, password) => {
-  const response = await fetch("http://localhost:5000users/signUp", {
+  const response = await fetch("http://localhost:5000/users/signUp", {
     method: "POST",
     mode: "cors",
     headers: {

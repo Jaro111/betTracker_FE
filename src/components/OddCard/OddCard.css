@@ -1,0 +1,92 @@
+.OddCard-wrapper {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 0.5px solid lightslategray;
+}
+.oddCard-content {
+  margin: 3px;
+  padding: 0;
+  font-size: 13px;
+}
+
+.oddCard-bookmaker-wrapper {
+  width: 150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+}
+.oddCard-date-wrapper {
+  width: 130px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.oddCard-match-wrapper {
+  width: 330px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.oddCard-bet-wrapper {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+}
+.oddCard-back-wrapper {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.oddCard-lay-wrapper {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.oddCard-exchange-wrapper {
+  width: 150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 900;
+}
+.oddCard-spread-wrapper {
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.oddCard-Menu-content {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 5px;
+  padding: 5px;
+  font-weight: 900;
+}
+
+.oddCard-bookmaker-wrapper,
+.oddCard-bet-wrapper,
+.oddCard-date-wrapper,
+.oddCard-exchange-wrapper,
+.oddCard-lay-wrapper,
+.oddCard-match-wrapper,
+.oddCard-spread-wrapper,
+.oddCard-back-wrapper {
+  border: 1px solid lightslategray;
+}

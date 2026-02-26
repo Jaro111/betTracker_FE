@@ -1,6 +1,17 @@
 .HomeCentre {
   width: 100%;
-  border: 1px solid red;
   display: flex;
   justify-content: flex-start;
+  flex-direction: column;
+}
+
+.HomeCentre-Odd-wraper {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
