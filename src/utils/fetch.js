@@ -1,9 +1,9 @@
 import { writeCookie } from "../common/index";
-// import { getTokenFromCookie } from "../common";
+const url = import.meta.env.VITE_URL;
 
 // SIGN UP
 export const signupuUser = async (username, email, password) => {
-  const response = await fetch("http://localhost:5000/users/signUp", {
+  const response = await fetch(`${url}/users/signUp`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -23,7 +23,7 @@ export const signupuUser = async (username, email, password) => {
 // LOG IN
 export const login = async (username, password) => {
   console.log("click");
-  const response = await fetch("http://localhost:5000/users/logIn", {
+  const response = await fetch(`${url}/users/logIn`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -48,7 +48,7 @@ export const login = async (username, password) => {
 
 export const authCheck = async (jwt) => {
   try {
-    const response = await fetch("http://localhost:5000/users/authCheck", {
+    const response = await fetch(`${url}/users/authCheck`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -68,7 +68,7 @@ export const authCheck = async (jwt) => {
 // Fetch sports
 export const getSports = async (jwt) => {
   try {
-    const response = await fetch("http://localhost:5000/sport/getSports", {
+    const response = await fetch(`${url}/sport/getSports`, {
       method: "GET",
       mode: "cors",
       headers: {

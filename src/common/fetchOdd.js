@@ -1,5 +1,7 @@
+const url = import.meta.env.VITE_URL;
+
 export const fetchOddApi = async (sport, regions, markets) => {
-  const response = await fetch("http://localhost:5000/fetchOdds", {
+  const response = await fetch(`${url}/fetchOdds`, {
     method: "POST",
     mode: "cors",
     headers: {
