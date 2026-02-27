@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { login } from "../../../utils/fetch";
+import "./LogIn.css";
 
 export const LogIn = (props) => {
   const [username, setUsername] = useState("");
@@ -29,6 +30,7 @@ export const LogIn = (props) => {
           className="passwordInput"
           placeholder="password"
           onChange={(e) => changeHandler(e, setPassword, password)}
+          type="password"
         />
         <button type="submit" className="loginButton">
           Log In
