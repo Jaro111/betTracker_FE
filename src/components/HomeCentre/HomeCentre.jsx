@@ -17,6 +17,7 @@ export const HomeCentre = (props) => {
     key: "soccer_epl",
   });
   const [oddData, setOddData] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState();
 
   const getOddData = async () => {
     const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
@@ -25,6 +26,7 @@ export const HomeCentre = (props) => {
 
   useEffect(() => {
     getOddData();
+    // setOddData(jsonData);
   }, [sport.name]);
   return (
     <div className="HomeCentre">
@@ -38,7 +40,21 @@ export const HomeCentre = (props) => {
       <div className="HomeCentre-Odd-wraper">
         <OddMenu />
         {oddData.map((item, index) => {
-          return <OddCard key={index} item={item} />;
+          return (
+            <div
+              key={index}
+              style={{
+                border:
+                  selectedIndex === index
+                    ? "2px solid #ff0404"
+                    : "1px solid #f5f5f5",
+                cursor: "pointer",
+              }}
+              onClick={() => setSelectedIndex(index)}
+            >
+              <OddCard item={item} />
+            </div>
+          );
         })}
       </div>
     </div>
