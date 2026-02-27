@@ -35,6 +35,7 @@
 }
 
 .oddCard-bet-wrapper {
+  position: relative;
   width: 200px;
   height: 100%;
   display: flex;
@@ -89,4 +90,26 @@
 .oddCard-spread-wrapper,
 .oddCard-back-wrapper {
   border: 1px solid lightslategray;
+}
+
+.oddCard-icon-calc {
+  color: green;
+}
+
+.ModalCalc-odd-btn-calculate {
+  margin-top: 20px;
+}
+
+.ModalCalc-odd-result-wrapper {
+  background-color: rgb(158, 247, 227);
+  margin: 10px;
+  padding: 2px;
+}
+
+.ModalCalc-odd-result-content {
+  font-weight: 400;
+}
+
+.ModalCalc-odd-result-content-span {
+  font-weight: 900;
 }
