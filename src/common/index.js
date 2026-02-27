@@ -10,10 +10,16 @@ export const writeCookie = (key, value, days = 30) => {
   return cookie;
 };
 
+// export const getTokenFromCookie = (cookieName) => {
+//   const expression = new RegExp(`(?<=${cookieName}=)[^;]*`);
+
+//   const cookie = document.cookie.match(expression);
+
+//   return cookie;
+// };
 export const getTokenFromCookie = (cookieName) => {
-  const expression = new RegExp(`(?<=${cookieName}=)[^;]*`);
+  const expression = new RegExp(`(?<=^|; )${cookieName}=([^;]*)`);
+  const match = document.cookie.match(expression);
 
-  const cookie = document.cookie.match(expression);
-
-  return cookie;
+  return match ? match[1] : null; // Jeśli token nie istnieje, zwróci null
 };

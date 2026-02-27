@@ -9,7 +9,7 @@ import "./HomeCentre.css";
 
 export const HomeCentre = (props) => {
   const { user } = props;
-  const [allSports, setAllSports] = useState([]);
+  const [allSports, setAllSports] = useState(null);
   const [sport, setSport] = useState({
     country: "England",
     sport: "Football",

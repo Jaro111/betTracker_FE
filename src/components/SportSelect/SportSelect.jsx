@@ -24,13 +24,15 @@ export const SportSelect = (props) => {
           className="SportSelect-select"
           name="sports"
         >
-          {allSports.map((item, index) => {
-            return (
-              <option key={index} value={index}>
-                {item.name}
-              </option>
-            );
-          })}
+          {allSports
+            ? allSports.map((item, index) => {
+                return (
+                  <option key={index} value={index}>
+                    {item.name}
+                  </option>
+                );
+              })
+            : null}
         </select>
 
         {/* <input type="submit" value="Submit" /> */}

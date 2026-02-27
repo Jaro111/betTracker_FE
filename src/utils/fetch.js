@@ -51,9 +51,11 @@ export const authCheck = async (jwt) => {
     const response = await fetch(`${url}/users/authCheck`, {
       method: "GET",
       mode: "cors",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
+        credentials: "include",
       },
       //
     });
