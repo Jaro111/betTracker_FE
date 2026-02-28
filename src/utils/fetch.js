@@ -40,7 +40,6 @@ export const login = async (username, password) => {
   console.log(userData);
   writeCookie("jwt_token", userData.user.token, 3);
 
-  //   writeCookie("jwt_token", userData.user.token, 7);
   return userData;
 };
 
@@ -55,7 +54,7 @@ export const authCheck = async (jwt) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
-        credentials: "include",
+        // credentials: "include",
       },
       //
     });

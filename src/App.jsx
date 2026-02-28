@@ -45,7 +45,7 @@ function App() {
         <BrowserRouter basename="">
           <Navbar setUser={setUser} user={user} />
           <Routes>
-            <Route path="" element={<Home user={user} />} />
+            <Route path="" element={<Home setUser={setUser} user={user} />} />
           </Routes>
         </BrowserRouter>
       )}
