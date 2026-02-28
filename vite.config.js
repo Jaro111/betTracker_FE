@@ -7,6 +7,10 @@ export default defineConfig({
   server: {
     host: "0.0.0.0", // Expose to external connections
     port: 8080, // Zmiana portu na 3000, jeśli masz konflikt z innymi aplikacjami
+    allowedHosts: [
+      "bettrackerfe-production-281a.up.railway.app", // Dodaj swój host frontendowy
+      "localhost", // Lokalny host (opcjonalnie)
+    ],
   },
   preview: {
     port: 4173, // Możesz ustawić inny port dla wersji produkcyjnej, jeśli jest konflikt
