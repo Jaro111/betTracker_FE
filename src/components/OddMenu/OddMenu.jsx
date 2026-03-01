@@ -8,6 +8,9 @@ export const OddMenu = (props) => {
       <div className="oddCard-bookmaker-wrapper">
         <p className="oddCard-Menu-content">BOOKMAKER</p>
       </div>
+      <div className="oddCard-exchange-wrapper">
+        <p className="oddCard-Menu-content">EXCHANGE</p>
+      </div>
       <div className="oddCard-date-wrapper">
         <p className="oddCard-Menu-content">DATE</p>
       </div>
@@ -25,9 +28,7 @@ export const OddMenu = (props) => {
       <div className="oddCard-lay-wrapper">
         <p className="oddCard-Menu-content">LAY</p>
       </div>
-      <div className="oddCard-exchange-wrapper">
-        <p className="oddCard-Menu-content">EXCHANGE</p>
-      </div>
+
       <div className="oddCard-spread-wrapper">
         <p className="oddCard-Menu-content">SPREAD</p>
       </div>

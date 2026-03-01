@@ -1,7 +1,7 @@
 import React from "react";
 import { OddCard } from "../OddCard/OddCard";
 import { OddMenu } from "../OddMenu/OddMenu";
-import jsonData from "../../assets/flat_okazje.json";
+// import jsonData from "../../assets/flat_okazje.json";
 import { fetchOddApi } from "../../common/fetchOdd";
 import { useState, useEffect } from "react";
 import { SportSelect } from "../SportSelect/SportSelect";

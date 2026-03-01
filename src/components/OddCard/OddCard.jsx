@@ -31,6 +31,16 @@ export const OddCard = (props) => {
       <div className="oddCard-bookmaker-wrapper">
         <p className="oddCard-content">{item.bookmaker}</p>
       </div>
+      <div
+        className="oddCard-exchange-wrapper"
+        style={{
+          backgroundColor:
+            item.exchange === "Betfair" ? "rgb(72, 136, 255)" : "Black",
+          color: "white",
+        }}
+      >
+        <p className="oddCard-content">{item.exchange}</p>
+      </div>
       <div className="oddCard-date-wrapper">
         <p className="oddCard-content">{item.dateTime}</p>
       </div>
@@ -70,16 +80,7 @@ export const OddCard = (props) => {
       >
         <p className="oddCard-content">{item.lay}</p>
       </div>
-      <div
-        className="oddCard-exchange-wrapper"
-        style={{
-          backgroundColor:
-            item.exchange === "Betfair" ? "rgb(72, 136, 255)" : "Black",
-          color: "white",
-        }}
-      >
-        <p className="oddCard-content">{item.exchange}</p>
-      </div>
+
       <div
         className="oddCard-spread-wrapper"
         style={{ backgroundColor: item.spread > 0 ? "lightgreen" : "white" }}
