@@ -1,9 +1,10 @@
 import React from "react";
 import { OddCard } from "../OddCard/OddCard";
 import { OddMenu } from "../OddMenu/OddMenu";
-// import jsonData from "../../assets/flat_okazje.json";
+import { ModalFilter } from "../ModalFilter/MOdalFilter";
+import jsonData from "../../assets/flat_okazje.json";
 import { fetchOddApi } from "../../common/fetchOdd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { SportSelect } from "../SportSelect/SportSelect";
 import "./HomeCentre.css";
 
@@ -18,25 +19,54 @@ export const HomeCentre = (props) => {
   });
   const [oddData, setOddData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState();
+  const [isModalFilterVisible, setIsModalFilterVisible] = useState(false);
+  const [spread, setSpread] = useState(1);
+  const [bookieList, setBookieList] = useState([]);
+  const [committedSpread, setCommittedSpread] = useState(5);
+
+  const clickFilter = () => {
+    setIsModalFilterVisible(true);
+  };
 
   const getOddData = async () => {
+    // setOddData(jsonData.flatOpportunities);
+    // ------- test ----------
+
     const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
+    console.log(data);
     setOddData(data.flatOpportunities);
+    //  --- Odkreslic -- ver robocza;
   };
 
   useEffect(() => {
     getOddData();
-    // setOddData(jsonData);
+    console.log("dupa");
   }, [sport.name]);
+
   return (
     <div className="HomeCentre">
-      <SportSelect
-        user={user}
-        allSports={allSports}
-        setAllSports={setAllSports}
-        sport={sport}
-        setSport={setSport}
-      />
+      <div className="HomeCentre-Options-wrapper">
+        S
+        <SportSelect
+          user={user}
+          allSports={allSports}
+          setAllSports={setAllSports}
+          sport={sport}
+          setSport={setSport}
+        />
+        <button onClick={clickFilter}>FILTER</button>
+        {isModalFilterVisible && (
+          <ModalFilter
+            setIsModalFilterVisible={setIsModalFilterVisible}
+            const
+            spread={spread}
+            setSpread={setSpread}
+            bookieList={bookieList}
+            setBookieList={setBookieList}
+          />
+        )}
+      </div>
+
       <div className="HomeCentre-Odd-wraper">
         <OddMenu />
         {oddData.map((item, index) => {

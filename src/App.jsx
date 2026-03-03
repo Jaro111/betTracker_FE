@@ -19,7 +19,7 @@ function App() {
         logInWithToken(token, setUser);
       }
     }
-  }, []);
+  }, [user.username]);
 
   const logInWithToken = async (token, setUser) => {
     const persistantUser = await authCheck(token);
@@ -43,7 +43,7 @@ function App() {
         </div>
       ) : (
         <BrowserRouter basename="">
-          <Navbar setUser={setUser} user={user} />
+          <Navbar />
           <Routes>
             <Route path="" element={<Home setUser={setUser} user={user} />} />
           </Routes>

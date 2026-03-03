@@ -1,0 +1,123 @@
+// src/pages/OddsPage.tsx
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+interface Opportunity {
+  match: string;
+  bookmaker: string;
+  spread: number;
+  // ... reszta pól
+}
+
+const OddsPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [data, setData] = useState<Opportunity[]>([]);
+  const [allBookmakers, setAllBookmakers] = useState<string[]>([]); // z backendu
+
+  // === Odczyt filtrów z URL (lub localStorage jako fallback) ===
+  const minSpread = useMemo(() => {
+    const val = searchParams.get('minSpread');
+    return val ? Number(val) : 0;
+  }, [searchParams]);
+
+  const selectedBookmakers = useMemo(() => {
+    const val = searchParams.get('bookmakers');
+    if (!val) {
+      // fallback z localStorage
+      const saved = localStorage.getItem('selectedBookmakers');
+      return saved ? new Set(JSON.parse(saved)) : new Set<string>();
+    }
+    return new Set(val.split(',').filter(Boolean));
+  }, [searchParams]);
+
+  // === Pobranie danych z backendu ===
+  useEffect(() => {
+    fetch()
+  }, []);
+
+  // === Filtrowanie (błyskawiczne przy 2000 rekordach) ===
+  const filteredData = useMemo(() => {
+    return data.filter(item => {
+      if (Number(item.spread) < minSpread) return false;
+      if (selectedBookmakers.size > 0 && !selectedBookmakers.has(item.bookmaker)) {
+        return false;
+      }
+      return true;
+    });
+  }, [data, minSpread, selectedBookmakers]);
+
+  // === Zapisywanie zmian do URL + localStorage ===
+  const updateFilters = (newMinSpread?: number, newSelected?: Set<string>) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (newMinSpread !== undefined) {
+      if (newMinSpread > 0) params.set('minSpread', newMinSpread.toString());
+      else params.delete('minSpread');
+    }
+
+    if (newSelected !== undefined) {
+      if (newSelected.size > 0) {
+        params.set('bookmakers', Array.from(newSelected).join(','));
+        localStorage.setItem('selectedBookmakers', JSON.stringify(Array.from(newSelected)));
+      } else {
+        params.delete('bookmakers');
+        localStorage.removeItem('selectedBookmakers');
+      }
+    }
+
+    setSearchParams(params, { replace: true }); // replace: true → nie zaśmieca historii
+  };
+
+  // Checkbox handler
+  const toggleBookmaker = (bookmaker: string) => {
+    const newSet = new Set(selectedBookmakers);
+    if (newSet.has(bookmaker)) newSet.delete(bookmaker);
+    else newSet.add(bookmaker);
+
+    updateFilters(undefined, newSet);
+  };
+
+  // Input dla minSpread
+  const handleSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseFloat(e.target.value) || 0;
+    updateFilters(val);
+  };
+
+  return (
+    <div>
+      <h1>Odds Scanner</h1>
+
+      {/* Filtry */}
+      <div>
+        <label>Minimalny spread: </label>
+        <input
+          type="number"
+          step="0.1"
+          value={minSpread}
+          onChange={handleSpreadChange}
+        />
+      </div>
+
+      <div>
+        <h3>Wybierz bukmacherów ({allBookmakers.length})</h3>
+        {allBookmakers.map(bk => (
+          <label key={bk}>
+            <input
+              type="checkbox"
+              checked={selectedBookmakers.has(bk)}
+              onChange={() => toggleBookmaker(bk)}
+            />
+            {bk}
+          </label>
+        ))}
+      </div>
+
+      <p>Znaleziono: {filteredData.length} okazji</p>
+
+      {/* Tu wrzuć swoją tabelę – TanStack Table, MUI DataGrid itp. */}
+      <pre>{JSON.stringify(filteredData.slice(0, 5), null, 2)}</pre>
+    </div>
+  );
+};
+
+export default OddsPage;
