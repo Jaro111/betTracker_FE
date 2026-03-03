@@ -29,12 +29,12 @@ export const HomeCentre = (props) => {
   };
 
   const getOddData = async () => {
-    // setOddData(jsonData.flatOpportunities);
+    setOddData(jsonData.flatOpportunities);
     // ------- test ----------
 
-    const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
-    console.log(data);
-    setOddData(data.flatOpportunities);
+    // const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
+    // console.log(data);
+    // setOddData(data.flatOpportunities);
     //  --- Odkreslic -- ver robocza;
   };
 

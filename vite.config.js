@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: "0.0.0.0", // Expose to external connections,
-    port: 3000, // Zmiana portu na 3000, jeśli masz konflikt z innymi aplikacjami
+    port: 8080, // Zmiana portu na 3000, jeśli masz konflikt z innymi aplikacjami
     allowedHosts: [
       "bettrackerfe-production-281a.up.railway.app", // Dodaj swój host frontendowy
       "localhost", // Lokalny host (opcjonalnie)
