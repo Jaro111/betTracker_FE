@@ -1,5 +1,5 @@
 import "./Navbar.css";
 
-export const Navbar = ({ setUser, user }) => {
+export const Navbar = () => {
   return <div className="Navbar"></div>;
 };

@@ -15,3 +15,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.HomeCentre-Options-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  gap: 20px;
+}

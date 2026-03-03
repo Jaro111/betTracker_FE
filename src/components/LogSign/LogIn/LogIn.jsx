@@ -23,12 +23,12 @@ export const LogIn = (props) => {
       <form onSubmit={handleSubmit}>
         <input
           className="userNameInput"
-          placeholder="user name"
+          placeholder="userName"
           onChange={(e) => changeHandler(e, setUsername, username)}
         />
         <input
           className="passwordInput"
-          placeholder="password"
+          placeholder="Password"
           onChange={(e) => changeHandler(e, setPassword, password)}
           type="password"
         />
