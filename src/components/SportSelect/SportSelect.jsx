@@ -18,7 +18,7 @@ export const SportSelect = (props) => {
   return (
     <div className="SportSelect">
       <form className="SportSelect-select-form">
-        <label className="SportSelect-label">Sport:</label>
+        {/* <label className="SportSelect-label">Sport:</label> */}
         <select
           onChange={(e) => selectSport(e)}
           className="SportSelect-select"
@@ -27,7 +27,11 @@ export const SportSelect = (props) => {
           {allSports
             ? allSports.map((item, index) => {
                 return (
-                  <option key={index} value={index}>
+                  <option
+                    className="SportSelect-option"
+                    key={index}
+                    value={index}
+                  >
                     {item.name}
                   </option>
                 );

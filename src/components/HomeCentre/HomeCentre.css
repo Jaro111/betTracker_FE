@@ -24,3 +24,14 @@
   width: fit-content;
   gap: 20px;
 }
+
+.HomeCentre-filter-btn {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+}
+
+.HomeCentre-filter-btn:hover {
+  background-color: white;
+  color: black;
+}

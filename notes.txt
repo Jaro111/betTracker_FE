@@ -1,123 +1,132 @@
-// src/pages/OddsPage.tsx
-import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React from "react";
+import { getFilteredOdds } from "../../common/filterFunction";
+import { OddCard } from "../OddCard/OddCard";
+import { OddMenu } from "../OddMenu/OddMenu";
+import { ModalFilter } from "../ModalFilter/MOdalFilter";
+import jsonData from "../../assets/flat_okazje.json";
+import { fetchOddApi } from "../../common/fetchOdd";
+import { useState, useEffect, useMemo } from "react";
+import { SportSelect } from "../SportSelect/SportSelect";
+import "./HomeCentre.css";
 
-interface Opportunity {
-  match: string;
-  bookmaker: string;
-  spread: number;
-  // ... reszta pól
-}
+export const HomeCentre = (props) => {
+  const { user } = props;
+  const [allSports, setAllSports] = useState(null);
+  const [sport, setSport] = useState({
+    country: "England",
+    sport: "Football",
+    name: "Premier League",
+    key: "soccer_epl",
+  });
+  const [oddData, setOddData] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState();
+  const [isModalFilterVisible, setIsModalFilterVisible] = useState(false);
+  const [bookieList, setBookieList] = useState([]);
+  const [allBookiesChecked, setAllBookiesChecked] = useState(true);
+  // var to Modal
+  const [back, setBack] = useState(1); // Its not spread- its back
+  const [filterBookies, setFilterBookies] = useState([]);
+  //
+  const [change, setChange] = useState(0);
 
-const OddsPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = useState<Opportunity[]>([]);
-  const [allBookmakers, setAllBookmakers] = useState<string[]>([]); // z backendu
+  const clickFilter = () => {
+    setIsModalFilterVisible(true);
+    // Sprawdzam w pamieci lokalnej czy jest jakis filtr bukmacherow zaznaczony   // w modal filter
+    // Jezeli sa ustwaiamy All checkbox na puste,
+    // Jezeli nie ma, zostawilismy puste i nie ma zaznaczonych itemow w liscie na zaznaczone
+    // const checkedBookies = localStorage.getItem("checkedBookies");
+    // const bookiesArray = JSON.parse(checkedBookies) || [];
+    // Jezeli sa ustwaiamy filter na ten z pamieci lokalnej
+    const checkSpread = JSON.parse(localStorage.getItem("chosenSpread")) || "1";
+    setBack(checkSpread);
+    // setFilterBookies(bookiesArray);
+    const allBookieCheck = JSON.parse(
+      localStorage.getItem("allBookiesChecked"),
+    );
+    // Warunki jak bysmy zostawili all bookie puste. To zaznaczy wszystko
+    if (
+      allBookieCheck === null ||
+      ((allBookieCheck === false || allBookieCheck === true) &&
+        filterBookies.length === 0)
+    ) {
+      setAllBookiesChecked(true);
+      localStorage.setItem("allBookiesChecked", JSON.stringify(true));
+    } else setAllBookiesChecked(false);
+  };
 
-  // === Odczyt filtrów z URL (lub localStorage jako fallback) ===
-  const minSpread = useMemo(() => {
-    const val = searchParams.get('minSpread');
-    return val ? Number(val) : 0;
-  }, [searchParams]);
+  const getOddData = async () => {
+    const excludedBookies =
+      JSON.parse(localStorage.getItem("checkedBookies")) || [];
+    const checkSpread = JSON.parse(localStorage.getItem("chosenSpread")) || "1";
+    //
+    // const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
+    // console.log(data);
+    const filteredData = getFilteredOdds(
+      jsonData.flatOpportunities, // <---Test
+      // data.flatOpportunities, // <---Robocza
+      excludedBookies,
+      Number(checkSpread),
+    );
+    // setBookieList(data.uniqueBookmakers); // <---Robocza
+    setBookieList(jsonData.bookmakers); // <---Robocza
+    setOddData(filteredData);
+    setFilterBookies(excludedBookies);
+  };
 
-  const selectedBookmakers = useMemo(() => {
-    const val = searchParams.get('bookmakers');
-    if (!val) {
-      // fallback z localStorage
-      const saved = localStorage.getItem('selectedBookmakers');
-      return saved ? new Set(JSON.parse(saved)) : new Set<string>();
-    }
-    return new Set(val.split(',').filter(Boolean));
-  }, [searchParams]);
-
-  // === Pobranie danych z backendu ===
   useEffect(() => {
-    fetch()
-  }, []);
-
-  // === Filtrowanie (błyskawiczne przy 2000 rekordach) ===
-  const filteredData = useMemo(() => {
-    return data.filter(item => {
-      if (Number(item.spread) < minSpread) return false;
-      if (selectedBookmakers.size > 0 && !selectedBookmakers.has(item.bookmaker)) {
-        return false;
-      }
-      return true;
-    });
-  }, [data, minSpread, selectedBookmakers]);
-
-  // === Zapisywanie zmian do URL + localStorage ===
-  const updateFilters = (newMinSpread?: number, newSelected?: Set<string>) => {
-    const params = new URLSearchParams(searchParams);
-
-    if (newMinSpread !== undefined) {
-      if (newMinSpread > 0) params.set('minSpread', newMinSpread.toString());
-      else params.delete('minSpread');
-    }
-
-    if (newSelected !== undefined) {
-      if (newSelected.size > 0) {
-        params.set('bookmakers', Array.from(newSelected).join(','));
-        localStorage.setItem('selectedBookmakers', JSON.stringify(Array.from(newSelected)));
-      } else {
-        params.delete('bookmakers');
-        localStorage.removeItem('selectedBookmakers');
-      }
-    }
-
-    setSearchParams(params, { replace: true }); // replace: true → nie zaśmieca historii
-  };
-
-  // Checkbox handler
-  const toggleBookmaker = (bookmaker: string) => {
-    const newSet = new Set(selectedBookmakers);
-    if (newSet.has(bookmaker)) newSet.delete(bookmaker);
-    else newSet.add(bookmaker);
-
-    updateFilters(undefined, newSet);
-  };
-
-  // Input dla minSpread
-  const handleSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value) || 0;
-    updateFilters(val);
-  };
+    getOddData();
+  }, [sport.name, change]);
 
   return (
-    <div>
-      <h1>Odds Scanner</h1>
-
-      {/* Filtry */}
-      <div>
-        <label>Minimalny spread: </label>
-        <input
-          type="number"
-          step="0.1"
-          value={minSpread}
-          onChange={handleSpreadChange}
+    <div className="HomeCentre">
+      <div className="HomeCentre-Options-wrapper">
+        <SportSelect
+          user={user}
+          allSports={allSports}
+          setAllSports={setAllSports}
+          sport={sport}
+          setSport={setSport}
         />
+        <button className="HomeCentre-filter-btn" onClick={clickFilter}>
+          FILTER
+        </button>
+        {isModalFilterVisible && (
+          <ModalFilter
+            setIsModalFilterVisible={setIsModalFilterVisible}
+            const
+            back={back}
+            setBack={setBack}
+            bookieList={bookieList}
+            allBookiesChecked={allBookiesChecked}
+            setAllBookiesChecked={setAllBookiesChecked}
+            filterBookies={filterBookies}
+            setFilterBookies={setFilterBookies}
+            change={change}
+            setChange={setChange}
+          />
+        )}
       </div>
 
-      <div>
-        <h3>Wybierz bukmacherów ({allBookmakers.length})</h3>
-        {allBookmakers.map(bk => (
-          <label key={bk}>
-            <input
-              type="checkbox"
-              checked={selectedBookmakers.has(bk)}
-              onChange={() => toggleBookmaker(bk)}
-            />
-            {bk}
-          </label>
-        ))}
+      <div className="HomeCentre-Odd-wraper">
+        <OddMenu />
+        {oddData.map((item, index) => {
+          return (
+            <div
+              key={index}
+              style={{
+                border:
+                  selectedIndex === index
+                    ? "2px solid #04ff19"
+                    : "1px solid #cfcfcf",
+                cursor: "pointer",
+              }}
+              onClick={() => setSelectedIndex(index)}
+            >
+              <OddCard item={item} />
+            </div>
+          );
+        })}
       </div>
-
-      <p>Znaleziono: {filteredData.length} okazji</p>
-
-      {/* Tu wrzuć swoją tabelę – TanStack Table, MUI DataGrid itp. */}
-      <pre>{JSON.stringify(filteredData.slice(0, 5), null, 2)}</pre>
     </div>
   );
 };
-
-export default OddsPage;

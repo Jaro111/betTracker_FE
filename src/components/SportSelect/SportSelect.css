@@ -19,3 +19,8 @@
 .SportSelect-select {
   margin-right: 5px;
 }
+
+.SportSelect-select:hover {
+  background-color: black;
+  color: white;
+}
