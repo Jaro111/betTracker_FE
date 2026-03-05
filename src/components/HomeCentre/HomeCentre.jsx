@@ -54,6 +54,8 @@ export const HomeCentre = (props) => {
     const checkSpread = JSON.parse(localStorage.getItem("chosenSpread")) || "1";
     //
     const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
+    console.log("data");
+    console.log(data);
     const filteredData = getFilteredOdds(
       // jsonData.flatOpportunities, // <---Test
       data.flatOpportunities, // <---Robocza
