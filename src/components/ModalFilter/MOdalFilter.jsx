@@ -64,12 +64,6 @@ export const ModalFilter = (props) => {
 
   return (
     <div className="ModalFilter">
-      {/* <div className="ModalFilter-closeIcon-wrapper">
-        <IoIosClose
-          className="ModalFilter-closeIcon"
-          onClick={() => setIsModalFilterVisible(false)}
-        />
-      </div> */}
       <div className="ModalFilter-Content-wrapper">
         {/* ----------------- SLIDER ----------------- */}
         <div className="ModalFilter-Slider-wrapper">
