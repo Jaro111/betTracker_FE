@@ -1,6 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { IoIosClose } from "react-icons/io";
 import "./ModalFilter.css";
 
 export const ModalFilter = (props) => {
@@ -82,7 +80,7 @@ export const ModalFilter = (props) => {
             }}
             min={1}
             max={10}
-            step={0.1}
+            step={0.2}
             value={back}
             onChange={(e) => {
               setBack(e.target.value);
