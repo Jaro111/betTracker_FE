@@ -1,4 +1,5 @@
 import React from "react";
+import { getFilteredOdds } from "../../common/filterFunction";
 import { OddCard } from "../OddCard/OddCard";
 import { OddMenu } from "../OddMenu/OddMenu";
 import { ModalFilter } from "../ModalFilter/MOdalFilter";
@@ -20,33 +21,58 @@ export const HomeCentre = (props) => {
   const [oddData, setOddData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState();
   const [isModalFilterVisible, setIsModalFilterVisible] = useState(false);
-  const [spread, setSpread] = useState(1);
   const [bookieList, setBookieList] = useState([]);
-  const [committedSpread, setCommittedSpread] = useState(5);
+  const [allBookiesChecked, setAllBookiesChecked] = useState(true);
+  // var to Modal
+  const [back, setBack] = useState(1); // Its not spread- its back
+  const [filterBookies, setFilterBookies] = useState([]);
+  //
+  const [change, setChange] = useState(0);
 
   const clickFilter = () => {
     setIsModalFilterVisible(true);
+    // Sprawdzam w pamieci lokalnej czy jest jakis filtr bukmacherow zaznaczony w modal filter
+    const checkSpread = JSON.parse(localStorage.getItem("chosenSpread")) || "1";
+    setBack(checkSpread);
+    const allBookieCheck = JSON.parse(
+      localStorage.getItem("allBookiesChecked"),
+    );
+    // Warunki jak bysmy zostawili all bookie puste. To zaznaczy wszystko
+    if (
+      allBookieCheck === null ||
+      ((allBookieCheck === false || allBookieCheck === true) &&
+        filterBookies.length === 0)
+    ) {
+      setAllBookiesChecked(true);
+      localStorage.setItem("allBookiesChecked", JSON.stringify(true));
+    } else setAllBookiesChecked(false);
   };
 
   const getOddData = async () => {
-    // setOddData(jsonData.flatOpportunities);
-    // ------- test ----------
-
+    const excludedBookies =
+      JSON.parse(localStorage.getItem("checkedBookies")) || [];
+    const checkSpread = JSON.parse(localStorage.getItem("chosenSpread")) || "1";
+    //
     const data = await fetchOddApi(sport.key, "uk", "h2h,h2h_lay");
-    console.log(data);
-    setOddData(data.flatOpportunities);
-    //  --- Odkreslic -- ver robocza;
+    const filteredData = getFilteredOdds(
+      // jsonData.flatOpportunities, // <---Test
+      data.flatOpportunities, // <---Robocza
+      excludedBookies,
+      Number(checkSpread),
+    );
+    setBookieList(data.uniqueBookmakers); // <---Robocza
+    // setBookieList(jsonData.bookmakers); // <---Test
+    setOddData(filteredData);
+    setFilterBookies(excludedBookies);
   };
 
   useEffect(() => {
     getOddData();
-    console.log("dupa");
-  }, [sport.name]);
+  }, [sport.name, change]);
 
   return (
     <div className="HomeCentre">
       <div className="HomeCentre-Options-wrapper">
-        S
         <SportSelect
           user={user}
           allSports={allSports}
@@ -54,15 +80,22 @@ export const HomeCentre = (props) => {
           sport={sport}
           setSport={setSport}
         />
-        <button onClick={clickFilter}>FILTER</button>
+        <button className="HomeCentre-filter-btn" onClick={clickFilter}>
+          FILTER
+        </button>
         {isModalFilterVisible && (
           <ModalFilter
             setIsModalFilterVisible={setIsModalFilterVisible}
             const
-            spread={spread}
-            setSpread={setSpread}
+            back={back}
+            setBack={setBack}
             bookieList={bookieList}
-            setBookieList={setBookieList}
+            allBookiesChecked={allBookiesChecked}
+            setAllBookiesChecked={setAllBookiesChecked}
+            filterBookies={filterBookies}
+            setFilterBookies={setFilterBookies}
+            change={change}
+            setChange={setChange}
           />
         )}
       </div>
@@ -76,8 +109,8 @@ export const HomeCentre = (props) => {
               style={{
                 border:
                   selectedIndex === index
-                    ? "2px solid #ff0404"
-                    : "1px solid #f5f5f5",
+                    ? "2px solid #04ff19"
+                    : "1px solid #cfcfcf",
                 cursor: "pointer",
               }}
               onClick={() => setSelectedIndex(index)}

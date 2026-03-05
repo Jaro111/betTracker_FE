@@ -2,13 +2,12 @@
   position: absolute;
   top: 30px;
   position: absolute;
-  width: 500px;
+  width: 450px;
   height: 300px;
-  background-color: rgb(173, 173, 173);
-  border: 1px solid black;
+  background-color: rgb(224, 210, 210);
+  border: 2px solid black;
+  border-radius: 5px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   /* z-index: 900; */
   left: 220px;
@@ -24,35 +23,94 @@
   width: 30px;
   height: 30px;
 }
+.ModalFilter-closeIcon:hover {
+  color: white;
+  background-color: black;
+}
 .ModalFilter-Content-wrapper {
+  position: relative;
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 }
+
+/* ----------------- SLIDER ----------------- */
 .ModalFilter-Slider-wrapper {
-  width: 80%;
-  height: 20%;
+  width: 50%;
+  height: 110%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.ModalFilter-spreadSlider {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 40px;
+  height: 250px; /* Specified height */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+}
+.ModalFilter-spreadSlider-content-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
 }
-.ModalFilter-spreadSlider {
-  width: 50%; /* Full-width */
-  height: 25px; /* Specified height */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+.ModalFilter-spreadSlider-content {
+  margin: 0 0 10px 0;
+  padding: 0;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
 }
+
+/* ----------------- CHECKBOX ALL ----------------- */
 .ModalFilter-bookCheckbox-wrapper {
-  width: 100%;
-  height: 80%;
+  width: 30%;
+  height: 90%;
+  border: 1px SOLID rgb(0, 0, 0);
+  background-color: white;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.ModalFilter-title-bookies-conetnt-wrapper {
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  flex-direction: row;
-  border: 1px SOLID RED;
+  align-items: center;
+}
+.ModalFilter-title-bookies-content {
+  margin: 0 0 5px 0;
+  padding: 0;
+  font-weight: 500;
+}
+.ModalFilter-title-bookies-checkbox {
+  margin: 3px 0 5px 10px;
+}
+.ModalFilter-title-bookies-checkbox:hover {
+  background-color: black;
+}
+
+/* .ModalFilter-bookieLIst-wrapper {
+} */
+.ModalFilter-bookieLIst-wrapper:hover {
+  background-color: black;
+  color: white;
+}
+
+/* ----------------- SAVE BTN ----------------- */
+.ModalFilter-saveButton {
+  width: fit-content;
+  position: absolute;
+  border-radius: 5px;
+  bottom: 5px;
+  right: 5px;
+}
+.ModalFilter-saveButton:hover {
+  background-color: black;
+  color: white;
 }

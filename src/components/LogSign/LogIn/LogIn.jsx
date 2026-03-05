@@ -10,6 +10,7 @@ export const LogIn = (props) => {
   //
   const changeHandler = (e, setter, state) => {
     setter(e.target.value);
+    e.preventDefault();
   };
 
   const handleSubmit = async (e) => {

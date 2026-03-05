@@ -19,7 +19,7 @@ function App() {
         logInWithToken(token, setUser);
       }
     }
-  }, [user.username]);
+  }, []);
 
   const logInWithToken = async (token, setUser) => {
     const persistantUser = await authCheck(token);
