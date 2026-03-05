@@ -1,6 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { IoIosClose } from "react-icons/io";
+import { useEffect } from "react";
 import "./ModalFilter.css";
 
 export const ModalFilter = (props) => {
