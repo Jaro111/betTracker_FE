@@ -15,8 +15,8 @@ export const fetchOddApi = async (sport, regions, markets) => {
   });
 
   const data = await response.json();
-  const res = await data.credits;
-  return res;
+
+  return data;
 };
 
 // Credits check
