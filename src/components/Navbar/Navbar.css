@@ -2,7 +2,12 @@
   width: 100%;
   height: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 0;
+}
+
+.Navbar-credit-number {
+  margin-left: 20px;
+  font-weight: 700;
 }
